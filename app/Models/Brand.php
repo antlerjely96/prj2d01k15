@@ -13,9 +13,41 @@ class Brand extends Model
     //Function lấy dữ liệu từ DB
     public function index(): \Illuminate\Support\Collection
     {
-        //Viết query bulider lấy dữ liệu
+        //Viết query builder lấy dữ liệu
         $brands = DB::table('brands')->get();
         //Gửi dữ liệu về controller
         return $brands;
+    }
+
+    //Function lưu dữ liệu lên DB
+    public function addBrand(): void
+    {
+        //Query Builder lưu dữ liệu lên DB
+        DB::table('brands')
+            ->insert([
+                'name' => $this->name,
+                'country' => $this->country,
+            ]);
+    }
+
+    //Function update dữ liệu
+    public function updateBrand(): void
+    {
+        //Query builder update dữ liệu
+        DB::table('brands')
+            ->where('id', $this->id)
+            ->update([
+                'name' => $this->name,
+                'country' => $this->country,
+            ]);
+    }
+
+    //Function xóa dữ liệu
+    public function deleteBrand(): void
+    {
+        //Query builder xóa dữ liệu
+        DB::table('brands')
+            ->where('id', $this->id)
+            ->delete();
     }
 }
