@@ -34,3 +34,6 @@ Route::put('brands/{brand}/edit', [\App\Http\Controllers\BrandController::class,
 
 Route::delete('/brands/{brand}', [\App\Http\Controllers\BrandController::class, 'destroy'])
     ->name('brands.destroy');
+
+Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])
+    ->name('products.index');
