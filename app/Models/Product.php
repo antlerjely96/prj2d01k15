@@ -21,4 +21,40 @@ class Product extends Model
         //Trả về dữ liệu đã lấy được
         return $products;
     }
+
+    //function lưu dữ liệu lên DB
+    public function createProduct(): void
+    {
+        //Query builder để lưu dữ liệu lên DB
+        DB::table('products')
+            ->insert([
+                'name' => $this->name,
+                'price' => $this->price,
+                'quantity' => $this->quantity,
+                'brand_id' => $this->brand_id,
+            ]);
+    }
+
+    //function update dữ liệu
+    public function updateProduct(): void
+    {
+        //Query builder update
+        DB::table('products')
+            ->where('id', $this->id)
+            ->update([
+                'name' => $this->name,
+                'price' => $this->price,
+                'quantity' => $this->quantity,
+                'brand_id' => $this->brand_id,
+            ]);
+    }
+
+    //function xóa dữ liệu
+    public function deleteProduct(): void
+    {
+        //Query builder xóa
+        DB::table('products')
+            ->where('id', $this->id)
+            ->delete();
+    }
 }

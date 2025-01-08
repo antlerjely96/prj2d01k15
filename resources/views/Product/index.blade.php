@@ -6,6 +6,7 @@
     <title>Product List</title>
 </head>
 <body>
+    <a href="{{ route('products.create') }}">Add a product</a>
     <table border="1px" cellspacing="0" cellpadding="0" width="50%">
         <tr>
             <td>ID</td>
@@ -13,6 +14,8 @@
             <td>Price</td>
             <td>Quantity</td>
             <td>Brand</td>
+            <td></td>
+            <td></td>
         </tr>
         @foreach($products as $product)
             <tr>
@@ -30,6 +33,16 @@
                 </td>
                 <td>
                     {{ $product->brand_name }}
+                </td>
+                <td>
+                    <a href="{{ route('products.edit', $product->id) }}">Edit</a>
+                </td>
+                <td>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="post">
+                        @csrf
+                        @method("DELETE")
+                        <button>Delete</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
