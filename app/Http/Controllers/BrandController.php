@@ -14,15 +14,22 @@ class BrandController extends Controller
      */
     public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        //Tạo đối tượng của Model
-        $obj = new Brand();
-        //Nhận dữ liệu từ Model: gọi function từ Model
-        $brands = $obj->index();
-        //Gửi dữ liệu lên view
+        /* Dùng query builder */
+//        //Tạo đối tượng của Model
+//        $obj = new Brand();
+//        //Nhận dữ liệu từ Model: gọi function từ Model
+//        $brands = $obj->index();
+//        //Gửi dữ liệu lên view
+//        return view('Brand.index', [
+//            'brands' => $brands
+//        ]);
+        /* Dùng ORM Eloquent */
+        //Lấy dữ liệu từ DB
+        $brands = Brand::all();
+        //Gửi sang view
         return view('Brand.index', [
             'brands' => $brands
         ]);
-
     }
 
     /**
@@ -39,13 +46,23 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request): \Illuminate\Http\RedirectResponse
     {
-        //Tạo đối tượng của model
-        $obj = new Brand();
-        //Lấy dữ liệu từ form gán vào đối tượng
-        $obj->name = $request->name;
-        $obj->country = $request->country;
-        //Gọi function trong model để lưu dữ liệu
-        $obj->addBrand();
+        /* Dùng query builder */
+//        //Tạo đối tượng của model
+//        $obj = new Brand();
+//        //Lấy dữ liệu từ form gán vào đối tượng
+//        $obj->name = $request->name;
+//        $obj->country = $request->country;
+//        //Gọi function trong model để lưu dữ liệu
+//        $obj->addBrand();
+//        //Quay lại danh sách
+//        return Redirect::route('brands.index');
+
+        /* Dùng ORM Eloquent */
+        //Lấy dữ liệu từ form và lưu lên db
+        Brand::create([
+            'name' => $request->name,
+            'country' => $request->country
+        ]);
         //Quay lại danh sách
         return Redirect::route('brands.index');
     }
@@ -74,13 +91,22 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand): \Illuminate\Http\RedirectResponse
     {
-        //Lấy dữ liệu từ form và gán vào đối tượng
-        $brand->id = $request->id;
-        $brand->name = $request->name;
-        $brand->country = $request->country;
-        //Gọi function update trong model
-        $brand->updateBrand();
-        //Quay về Danh sách
+        /* Dùng query builder */
+//        //Lấy dữ liệu từ form và gán vào đối tượng
+//        $brand->id = $request->id;
+//        $brand->name = $request->name;
+//        $brand->country = $request->country;
+//        //Gọi function update trong model
+//        $brand->updateBrand();
+//        //Quay về Danh sách
+//        return Redirect::route('brands.index');
+        /* Dùng ORM Eloquent */
+        //Lấy dữ liệu từ form và update
+        $brand->update([
+            'name' => $request->name,
+            'country' => $request->country,
+        ]);
+        //Quay lại danh sách
         return Redirect::route('brands.index');
     }
 
@@ -89,8 +115,14 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand): \Illuminate\Http\RedirectResponse
     {
-        //Gọi đến function xóa trong model
-        $brand->deleteBrand();
+        /* Dùng query builder*/
+//        //Gọi đến function xóa trong model
+//        $brand->deleteBrand();
+//        //Quay lại danh sách
+//        return Redirect::route('brands.index');
+
+        /* Dùng ORM Eloquent */
+        $brand->delete();
         //Quay lại danh sách
         return Redirect::route('brands.index');
     }
