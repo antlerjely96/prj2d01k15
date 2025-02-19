@@ -13,6 +13,7 @@
             <td>Name</td>
             <td>Price</td>
             <td>Quantity</td>
+            <td>Description</td>
             <td>Brand</td>
             <td></td>
             <td></td>
@@ -36,7 +37,11 @@
 
                 </td>
                 <td>
-                    <?php echo e($product->brand_name); ?>
+                    <?php echo e($product->description); ?>
+
+                </td>
+                <td>
+                    <?php echo e($product->brand->name); ?>
 
                 </td>
                 <td>

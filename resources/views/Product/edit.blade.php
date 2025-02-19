@@ -13,6 +13,7 @@
         Name: <input type="text" name="name" value="{{ $product->name }}"><br>
         Price: <input type="text" name="price" value="{{ $product->price }}"><br>
         Quantity: <input type="text" name="quantity" value="{{ $product->quantity }}"><br>
+        Description: <input type="text" name="description" value="{{ $product->description }}"><br>
         Brand: <select name="brand_id">
             @foreach($brands as $brand)
                 <option value="{{ $brand->id }}"

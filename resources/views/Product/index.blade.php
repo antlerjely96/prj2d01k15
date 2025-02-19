@@ -13,6 +13,7 @@
             <td>Name</td>
             <td>Price</td>
             <td>Quantity</td>
+            <td>Description</td>
             <td>Brand</td>
             <td></td>
             <td></td>
@@ -32,7 +33,10 @@
                     {{ $product->quantity }}
                 </td>
                 <td>
-                    {{ $product->brand_name }}
+                    {{ $product->description }}
+                </td>
+                <td>
+                    {{ $product->brand->name }}
                 </td>
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}">Edit</a>

@@ -13,6 +13,7 @@
         Name: <input type="text" name="name" value="<?php echo e($product->name); ?>"><br>
         Price: <input type="text" name="price" value="<?php echo e($product->price); ?>"><br>
         Quantity: <input type="text" name="quantity" value="<?php echo e($product->quantity); ?>"><br>
+        Description: <input type="text" name="description" value="<?php echo e($product->description); ?>"><br>
         Brand: <select name="brand_id">
             <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($brand->id); ?>"

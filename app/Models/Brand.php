@@ -14,6 +14,11 @@ class Brand extends Model
     protected $fillable = ['name', 'country'];
     public $timestamps = false;
 
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     //Function lấy dữ liệu từ DB
 //    public function index(): \Illuminate\Support\Collection
 //    {
