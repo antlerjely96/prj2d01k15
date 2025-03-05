@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
+use JetBrains\PhpStorm\NoReturn;
 
 class AdminController extends Controller
 {
@@ -62,5 +66,32 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+
+    public function login(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('Login.login');
+    }
+
+    public function loginProcess(\Illuminate\Http\Request $request)
+    {
+        $accounts = $request->only(['email', 'password']);
+        if(Auth::guard('admin')->attempt($accounts)){
+            //Lấy dữ liệu của người đang đăng nhập
+            $admin = Auth::guard('admin')->user();
+            Auth::guard('admin')->login($admin);
+            //Lưu dữ liệu của người đang đăng nhập lên session
+            session(['admin' => $admin]);
+            return Redirect::route('brands.index');
+        } else {
+            return Redirect::back();
+        }
+    }
+
+    public function logout(): \Illuminate\Http\RedirectResponse
+    {
+        Auth::guard('admin')->logout();
+        session()->forget('admin');
+        return Redirect::route('login');
     }
 }
