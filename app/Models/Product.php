@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $table = 'products';
-    protected $fillable = ['name', 'price', 'quantity', 'description', 'brand_id'];
+    protected $fillable = ['name', 'price', 'quantity', 'description', 'brand_id', 'image'];
     public $timestamps = false;
 
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo

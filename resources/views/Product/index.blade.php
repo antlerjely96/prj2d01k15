@@ -15,6 +15,7 @@
             <td>Quantity</td>
             <td>Description</td>
             <td>Brand</td>
+            <td>Image</td>
             <td></td>
             <td></td>
         </tr>
@@ -37,6 +38,9 @@
                 </td>
                 <td>
                     {{ $product->brand->name }}
+                </td>
+                <td>
+                    <img src="{{ asset(\Illuminate\Support\Facades\Storage::url('Admin/') . $product->image) }}" width="50px" height="50px">
                 </td>
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}">Edit</a>

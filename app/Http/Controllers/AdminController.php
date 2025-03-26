@@ -73,7 +73,7 @@ class AdminController extends Controller
         return view('Login.login');
     }
 
-    public function loginProcess(\Illuminate\Http\Request $request)
+    public function loginProcess(\Illuminate\Http\Request $request): \Illuminate\Http\RedirectResponse
     {
         $accounts = $request->only(['email', 'password']);
         if(Auth::guard('admin')->attempt($accounts)){

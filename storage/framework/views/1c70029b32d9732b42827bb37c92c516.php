@@ -15,6 +15,7 @@
             <td>Quantity</td>
             <td>Description</td>
             <td>Brand</td>
+            <td>Image</td>
             <td></td>
             <td></td>
         </tr>
@@ -43,6 +44,9 @@
                 <td>
                     <?php echo e($product->brand->name); ?>
 
+                </td>
+                <td>
+                    <img src="<?php echo e(asset(\Illuminate\Support\Facades\Storage::url('Admin/') . $product->image)); ?>" width="50px" height="50px">
                 </td>
                 <td>
                     <a href="<?php echo e(route('products.edit', $product->id)); ?>">Edit</a>

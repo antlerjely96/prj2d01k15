@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -78,12 +79,17 @@ class ProductController extends Controller
 
         /* Eloquent */
         //Lưu dữ liệu trong form lên db
+        $imageName = $request->file('image')->getClientOriginalName();
+        if(!Storage::exists('public/Admin/'.$imageName)){
+            Storage::putFileAs('public/Admin/', $request->file('image'), $imageName);
+        }
         Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
             'description' => $request->description,
-            'brand_id' => $request->brand_id
+            'brand_id' => $request->brand_id,
+            'image' => $imageName
         ]);
         //Quay lại danh sách
         return Redirect::route('products.index');

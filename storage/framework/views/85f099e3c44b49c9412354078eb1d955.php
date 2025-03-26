@@ -6,7 +6,7 @@
     <title>Add a product</title>
 </head>
 <body>
-    <form action="<?php echo e(route('products.store')); ?>" method="post">
+    <form action="<?php echo e(route('products.store')); ?>" method="post" enctype="multipart/form-data">
         <?php echo csrf_field(); ?>
         Name: <input type="text" name="name"><br>
         Price: <input type="text" name="price"><br>
@@ -20,6 +20,7 @@
                 </option>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </select><br>
+        Image: <input type="file" name="image"><br>
         <button>Add</button>
     </form>
 </body>
