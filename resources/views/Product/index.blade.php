@@ -18,6 +18,7 @@
             <td>Image</td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         @foreach($products as $product)
             <tr>
@@ -51,6 +52,10 @@
                         @method("DELETE")
                         <button>Delete</button>
                     </form>
+                </td>
+
+                <td>
+                    <a href="{{ route('products.addToCart', $product->id) }}">Add to Cart</a>
                 </td>
             </tr>
         @endforeach

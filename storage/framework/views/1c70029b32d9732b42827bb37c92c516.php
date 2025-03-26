@@ -18,6 +18,7 @@
             <td>Image</td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
@@ -57,6 +58,10 @@
                         <?php echo method_field("DELETE"); ?>
                         <button>Delete</button>
                     </form>
+                </td>
+
+                <td>
+                    <a href="<?php echo e(route('products.addToCart', $product->id)); ?>">Add to Cart</a>
                 </td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

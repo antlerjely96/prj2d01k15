@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -170,5 +171,65 @@ class ProductController extends Controller
         $product->delete();
         //Quay về danh sách
         return Redirect::route('products.index');
+    }
+
+    public function addToCart(Product $product): \Illuminate\Http\RedirectResponse
+    {
+        //Nếu cart tồn lại trên session thì lấy về, còn chưa thì tạo 1 mảng mới
+        $cart = session()->get('cart', []);
+        //Kiểm tra trên cart đã có snar phẩm được chọn chưa
+        if(isset($cart[$product->id])){
+            $cart[$product->id]['quantity']++;
+        } else {
+            $cart[$product->id] = [
+                'name' => $product->name,
+                'quantity' => 1,
+                'price' => $product->price,
+                'description' => $product->description,
+                'brand_id' => $product->brand_id,
+                'image' => $product->image
+            ];
+        }
+        //Lưu cart lên session
+        session()->put('cart', $cart);
+        return Redirect::route('products.cart');
+    }
+
+    public function cart(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $cart = session()->get('cart', []);
+        return view('Product.cart', [
+            'cart' => $cart
+        ]);
+    }
+
+    public function updateCart(\Illuminate\Http\Request $request): \Illuminate\Http\RedirectResponse
+    {
+        //Lấy sản phẩm có id và số lượng muốn cập nhật
+        $products = $request->product;
+        //Lấy cart
+        $cart = session()->get('cart', []);
+        foreach ($products as $id => $quantity) {
+//            dd($id);
+            $cart[$id]['quantity'] = $quantity;
+        }
+        session()->put('cart', $cart);
+        return Redirect::route('products.cart');
+    }
+
+    public function deleteAProduct(Product $product): \Illuminate\Http\RedirectResponse
+    {
+        //Lấy cart
+        $cart = session()->get('cart', []);
+        unset($cart[$product->id]);
+        session()->put('cart', $cart);
+        return Redirect::route('products.cart');
+    }
+
+    public function deleteAllProducts(): \Illuminate\Http\RedirectResponse
+    {
+        //Xóa cart
+        session()->forget('cart');
+        return Redirect::route('products.cart');
     }
 }

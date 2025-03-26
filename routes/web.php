@@ -53,6 +53,16 @@ Route::middleware('adminLoginMiddleware')->prefix('admin')->group(function () {
             ->name('products.update');
         Route::delete('/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])
             ->name('products.destroy');
+        Route::get('/{product}/add-to-cart', [\App\Http\Controllers\ProductController::class, 'addToCart'])
+            ->name('products.addToCart');
+        Route::get('/cart', [\App\Http\Controllers\ProductController::class, 'cart'])
+            ->name('products.cart');
+        Route::post('/update-cart', [\App\Http\Controllers\ProductController::class, 'updateCart'])
+            ->name('products.updateCart');
+        Route::get('/{product}/delete-a-product', [\App\Http\Controllers\ProductController::class, 'deleteAProduct'])
+            ->name('products.deleteAProduct');
+        Route::get('/delete-all-products', [\App\Http\Controllers\ProductController::class, 'deleteAllProducts'])
+            ->name('products.deleteAllProducts');
     });
 });
 
